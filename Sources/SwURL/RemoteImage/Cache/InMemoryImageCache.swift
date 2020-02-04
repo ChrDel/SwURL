@@ -18,7 +18,7 @@ public class InMemoryImageCache: ImageCacheType {
     /// Asyncronously stores an image in the cache
     /// - Parameter image: the image which you wish to store
     /// - Parameter url: the url at which you wish to associate with the image.
-    public func store(image: CGImage, for url: URL) {
+    public func store(image: CGImage, for url: URL, tmpUrl: URL? = nil) {
         queue.async { [weak cache] in
             cache?.setObject(image, forKey: url as NSURL)
         }

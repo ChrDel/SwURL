@@ -20,7 +20,7 @@ public class PersistentImageCache: ImageCacheType {
     
     private let cachesDirectory = FileManager.cachesDir()
 
-    public func store(image: CGImage, for url: URL) {
+    public func store(image: CGImage, for url: URL, tmpUrl: URL? = nil) {
       
         queue.async { [weak self] in
             guard let self = self else { return }
