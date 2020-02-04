@@ -85,7 +85,7 @@ private extension ImageLoader {
                         return
                 }
                 
-                self.cache.store(image: image, for: url)
+                self.cache.store(image: image, for: url, tempUrl: directory)
                 seal(.success(image))
             } catch {
                 seal(.failure(.generic(underlying: error)))
