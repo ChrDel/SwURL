@@ -10,7 +10,7 @@ import Combine
 import CoreGraphics
 
 public protocol ImageCacheType {
-    func store(image: CGImage, for url: URL)
+    func store(image: CGImage, for url: URL, tempUrl: URL? = nil)
     func image(for url: URL) -> Future<CGImage, ImageLoadError>
 }
 
