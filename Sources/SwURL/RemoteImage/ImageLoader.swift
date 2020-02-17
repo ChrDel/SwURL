@@ -42,17 +42,20 @@ private extension ImageLoader {
     /// Retrieves image from URL
     /// - Parameter url: url at which you require the image.
     func retrieve(url: URL) -> ImageLoadPromise {
-        let asyncLoad = networker.downloadTask(url: url)
-            .mapError(ImageLoadError.generic)
-            .flatMap(handleDownload)
-            .eraseToAnyPublisher()
+        let asyncLoad: () -> Future<(URLResponse, URL), Error> = { 
+            self.networker.downloadTask(url: url)
+        }
         
         return cache
             .image(for: url)
             .catch { error -> ImageLoadPromise in
-                return asyncLoad
+                return asyncLoad()
+                        .mapError(ImageLoadError.generic)
+                        .flatMap(self.handleDownload)
+                        .eraseToAnyPublisher()
         }.eraseToAnyPublisher()
     }
+
  
     /// Handles response of successful download response
     /// - Parameter response: data response from request
